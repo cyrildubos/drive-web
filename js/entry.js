@@ -56,8 +56,18 @@ function createDirectoyEntry(name) {
         event.preventDefault();
 
         console.log('remove');
-
-        // TODO: ajax call to remove file (remove.php)
+        $.ajax({
+        url: 'remove.php',
+        type: 'get',
+        dataType: 'json',
+        data: {
+            'path': GLOBAL_PATH.withRoot().toString()
+        },
+        success: function (data) {
+            setEntries();
+        }
+        });
+        
     });
 
     // right element
@@ -127,8 +137,17 @@ function createFileEntry(name, type) {
         event.preventDefault();
 
         console.log('remove');
-
-        // TODO: ajax call to remove file (remove.php)
+        $.ajax({
+        url: 'remove.php',
+        type: 'get',
+        dataType: 'json',
+        data: {
+            'path': GLOBAL_PATH.withRoot().toString()
+        },
+        success: function (data) {
+            setEntries();
+        }
+        });
     })
 
     // right element
