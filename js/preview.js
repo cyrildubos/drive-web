@@ -10,16 +10,23 @@ function setPreview(name, type) {
         var img = document.createElement('img');
 
         img.src = GLOBAL_PATH.next(name).withRoot();
+        img.classList.add('object-contain');
         img.classList.add('m-auto');
 
         preview.appendChild(img);
     } else if (VIDEO_TYPES.includes(type)) { // TODO: Fix this
-        var video = document.createElement('video');
+        var source = document.createElement('source');
+        source.src = GLOBAL_PATH.next(name).withRoot();
+        source.type = type;
 
-        video.src = GLOBAL_PATH.next(name).withRoot();
-        video.control = 'true';
+        var video = document.createElement('video');
+        video.classList.add('bg-black');
         video.classList.add('w-full');
         video.classList.add('h-full');
+        video.controls = 'controls';
+        video.autoplay = 'true';
+        video.appendChild(source);
+
 
         preview.appendChild(video);
     } else if (type == 'application/pdf') {
@@ -40,10 +47,8 @@ function setPreview(name, type) {
                 var div = document.createElement('div');
 
                 div.innerHTML = data;
-                div.classList.add('m-8');
                 div.classList.add('p-4');
                 div.classList.add('w-full');
-                div.classList.add('bg-white');
 
                 preview.appendChild(div);
             }
