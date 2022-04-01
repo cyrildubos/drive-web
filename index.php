@@ -22,7 +22,9 @@
 </head>
 
 <body class="truncate h-screen">
-    <div class="fixed top-0 left-0 right-0 h-16 bg-gray-600"></div>
+    <div class="fixed top-0 left-0 right-0 h-16 bg-gray-600 flex items-center">
+        <div id="breadcrumb" class="font-semibold text-white px-4"></div>
+    </div>
     <div class="h-full pt-16 flex">
         <div class="grow grid grid-cols-5">
             <div id="entries" class="col-span-3" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);"></div>

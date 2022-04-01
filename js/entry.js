@@ -187,7 +187,7 @@ function setEntries() {
             'path': GLOBAL_PATH.toString()
         },
         success: function (data) {
-            console.log(data);
+            setPreview('', '');
 
             var entries = document.getElementById('entries');
             entries.innerHTML = '';
@@ -202,9 +202,9 @@ function setEntries() {
 
             activateDirectoryEntries();
             activateFileEntries();
-        },
-        error: function (data) {
-            console.log(data);
+
+            var breadcrumb = document.getElementById('breadcrumb');
+            breadcrumb.innerHTML = GLOBAL_PATH.toFormatedString();
         }
     });
 }
