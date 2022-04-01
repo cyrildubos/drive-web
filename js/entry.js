@@ -25,7 +25,11 @@ function createDirectoyEntry(name) {
             'path': GLOBAL_PATH.next(name).toString()
         },
         success: function (data) {
-            files.innerText = (data['directories'].length + data['files'].length) + ' files';
+            var length = data['directories'].length + data['files'].length - 1;
+
+            if (GLOBAL_PATH.next(name).toString() == "") length--;
+
+            files.innerText = length + ' file(s)';
         }
     });
 
