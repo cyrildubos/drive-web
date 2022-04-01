@@ -25,7 +25,11 @@ function createDirectoyEntry(name) {
             'path': GLOBAL_PATH.next(name).toString()
         },
         success: function (data) {
-            files.innerText = (data['directories'].length + data['files'].length) + ' files';
+            var length = data['directories'].length + data['files'].length - 1;
+
+            if (GLOBAL_PATH.next(name).toString() == "") length--;
+
+            files.innerText = length + ' file(s)';
         }
     });
 
@@ -187,7 +191,7 @@ function setEntries() {
             'path': GLOBAL_PATH.toString()
         },
         success: function (data) {
-            console.log(data);
+            setPreview('', '');
 
             var entries = document.getElementById('entries');
             entries.innerHTML = '';
@@ -202,9 +206,9 @@ function setEntries() {
 
             activateDirectoryEntries();
             activateFileEntries();
-        },
-        error: function (data) {
-            console.log(data);
+
+            var breadcrumb = document.getElementById('breadcrumb');
+            breadcrumb.innerHTML = GLOBAL_PATH.toFormatedString();
         }
     });
 }

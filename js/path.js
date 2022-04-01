@@ -22,6 +22,10 @@ class Path {
     }
 
     toString() {
-        return this.path.join("/");
+        return this.path.join('/');
+    }
+
+    toFormatedString() {
+        return '/ ' + this.path.join(' / ');
     }
 }
