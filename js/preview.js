@@ -1,12 +1,8 @@
 function setPreview(name, type) {
-    const PICTURE_TYPES = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif', 'image/webp'];
-    const VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/ogg'];
-    const TEXT_TYPES = ['text/plain', 'text/html', 'text/css', 'text/javascript'];
-
     var preview = document.getElementById('preview');
     preview.innerHTML = "";
 
-    if (PICTURE_TYPES.includes(type)) {
+    if (type.startsWith('image/')) {
         var img = document.createElement('img');
 
         img.src = GLOBAL_PATH.next(name).withRoot();
@@ -14,7 +10,7 @@ function setPreview(name, type) {
         img.classList.add('m-auto');
 
         preview.appendChild(img);
-    } else if (VIDEO_TYPES.includes(type)) { // TODO: Fix this
+    } else if (type.startsWith('video/')) {
         var source = document.createElement('source');
         source.src = GLOBAL_PATH.next(name).withRoot();
         source.type = type;
@@ -29,16 +25,19 @@ function setPreview(name, type) {
 
 
         preview.appendChild(video);
-    } else if (type == 'application/pdf') {
-        var embed = document.createElement('embed');
+    } else if (type.startsWith('audio/')) {
+        var source = document.createElement('source');
+        source.src = GLOBAL_PATH.next(name).withRoot();
+        source.type = type;
 
-        embed.src = GLOBAL_PATH.next(name).withRoot();
-        embed.type = 'application/pdf';
-        embed.classList.add('w-full');
-        embed.classList.add('h-full');
+        var audio = document.createElement('audio');
+        audio.classList.add('m-auto');
+        audio.controls = 'controls';
+        audio.autoplay = 'true';
+        audio.appendChild(source);
 
-        preview.appendChild(embed);
-    } else if (TEXT_TYPES.includes(type)) {
+        preview.appendChild(audio);
+    } else if (type.startsWith('text/')) {
         $.ajax({
             url: GLOBAL_PATH.next(name).withRoot(),
             type: 'get',
@@ -53,5 +52,14 @@ function setPreview(name, type) {
                 preview.appendChild(div);
             }
         });
+    } else if (type == 'application/pdf') {
+        var embed = document.createElement('embed');
+
+        embed.src = GLOBAL_PATH.next(name).withRoot();
+        embed.type = 'application/pdf';
+        embed.classList.add('w-full');
+        embed.classList.add('h-full');
+
+        preview.appendChild(embed);
     }
 }
