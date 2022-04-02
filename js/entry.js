@@ -1,5 +1,5 @@
 
-function createDirectoyEntry(name) {
+function createDirectoyEntry(name, size) {
     // file icon element
     var fileIcon = document.createElement('div');
     fileIcon.classList.add('file-icon');
@@ -16,23 +16,6 @@ function createDirectoyEntry(name) {
     left.appendChild(fileIcon);
     left.appendChild(fileName);
 
-
-    $.ajax({
-        url: 'directories_and_files.php',
-        type: 'get',
-        dataType: 'json',
-        data: {
-            'path': GLOBAL_PATH.next(name).toString()
-        },
-        success: function (data) {
-            var length = data['directories'].length + data['files'].length - 1;
-
-            if (GLOBAL_PATH.next(name).toString() == "") length--;
-
-            files.innerText = length + ' file(s)';
-        }
-    });
-
     // files element
     var files = document.createElement('div');
     files.classList.add('rounded-full');
@@ -40,35 +23,35 @@ function createDirectoyEntry(name) {
     files.classList.add('text-white');
     files.classList.add('m-2');
     files.classList.add('p-2');
+    files.innerText = size + ' file(s)';
 
+    if (name != '..') {
+        // remove button
+        var remove = document.createElement('button');
+        remove.classList.add('rounded-full');
+        remove.classList.add('bg-red-700/75');
+        remove.classList.add('hover:bg-red-700');
+        remove.classList.add('text-white');
+        remove.classList.add('m-2');
+        remove.classList.add('p-2');
+        remove.innerText = 'Remove';
+        remove.id = 'remove';
 
-    // remove button
-    var remove = document.createElement('button');
-    remove.classList.add('rounded-full');
-    remove.classList.add('bg-red-700/75');
-    remove.classList.add('hover:bg-red-700');
-    remove.classList.add('text-white');
-    remove.classList.add('m-2');
-    remove.classList.add('p-2');
-    remove.innerText = 'Remove';
+        remove.addEventListener('click', function (event) {
+            event.preventDefault();
 
-    remove.addEventListener('click', function (event) {
-        event.preventDefault();
-
-        console.log('remove');
-        $.ajax({
-        url: 'remove.php',
-        type: 'get',
-        dataType: 'json',
-        data: {
-            'path': GLOBAL_PATH.withRoot().toString()
-        },
-        success: function (data) {
-            setEntries();
-        }
-        });
-        
-    });
+            $.ajax({
+                url: 'remove.php',
+                type: 'get',
+                data: {
+                    'path': GLOBAL_PATH.next(name).withRoot().toString()
+                },
+                success: function () {
+                    setEntries();
+                }
+            });
+        })
+    }
 
     // right element
     var right = document.createElement('div');
@@ -76,7 +59,7 @@ function createDirectoyEntry(name) {
     right.classList.add('items-center');
     right.classList.add('mr-2');
     right.appendChild(files);
-    right.appendChild(remove);
+    if (name != '..') right.appendChild(remove);
 
     // entry element
     var entry = document.createElement('div');
@@ -122,8 +105,9 @@ function createFileEntry(name, type) {
     download.innerText = 'Download';
     download.href = GLOBAL_PATH.next(name).withRoot().toString();
     download.download = name;
+    download.id = 'download';
 
-    // revmove button
+    // remove button
     var remove = document.createElement('button');
     remove.classList.add('rounded-full');
     remove.classList.add('bg-red-700/75');
@@ -132,21 +116,20 @@ function createFileEntry(name, type) {
     remove.classList.add('m-2');
     remove.classList.add('p-2');
     remove.innerText = 'Remove';
+    remove.id = 'remove';
 
     remove.addEventListener('click', function (event) {
         event.preventDefault();
 
-        console.log('remove');
         $.ajax({
-        url: 'remove.php',
-        type: 'get',
-        dataType: 'json',
-        data: {
-            'path': GLOBAL_PATH.withRoot().toString()
-        },
-        success: function (data) {
-            setEntries();
-        }
+            url: 'remove.php',
+            type: 'get',
+            data: {
+                'path': GLOBAL_PATH.next(name).withRoot().toString()
+            },
+            success: function () {
+                setEntries();
+            }
         });
     })
 
@@ -178,21 +161,23 @@ function activateDirectoryEntries() {
         directoryEntry.addEventListener('click', function (event) {
             event.preventDefault();
 
-            var name = event.currentTarget.dataset.name;
+            if (event.target.id != 'download' && event.target.id != 'remove') {
+                var name = event.currentTarget.dataset.name;
 
-            if (name == '..')
-                GLOBAL_PATH = GLOBAL_PATH.previous();
-            else
-                GLOBAL_PATH = GLOBAL_PATH.next(name);
+                if (name == '..')
+                    GLOBAL_PATH = GLOBAL_PATH.previous();
+                else
+                    GLOBAL_PATH = GLOBAL_PATH.next(name);
 
-            setEntries();
+                setEntries();
+            }
         })
 }
 
 function activateFileEntries() {
     for (var fileEntry of document.getElementsByClassName('file-entry'))
         fileEntry.addEventListener('click', function (event) {
-            // event.preventDefault();
+            event.preventDefault();
 
             var name = event.currentTarget.dataset.name;
             var type = event.currentTarget.dataset.type;
@@ -202,6 +187,8 @@ function activateFileEntries() {
 }
 
 function setEntries() {
+    console.log('qeqweqe')
+
     $.ajax({
         url: 'directories_and_files.php',
         type: 'get',
@@ -216,7 +203,7 @@ function setEntries() {
             entries.innerHTML = '';
 
             data['directories'].forEach(directory => {
-                entries.appendChild(createDirectoyEntry(directory));
+                entries.appendChild(createDirectoyEntry(directory['name'], directory['size']));
             });
 
             data['files'].forEach(file => {

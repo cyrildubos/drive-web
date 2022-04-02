@@ -18,12 +18,15 @@
     <script src="js/entry.js"></script>
     <script src="js/path.js"></script>
     <script src="js/preview.js"></script>
-    <script src="index.js"></script>
 </head>
 
 <body class="truncate h-screen">
-    <div class="fixed top-0 left-0 right-0 h-16 bg-gray-600 flex items-center">
-        <div id="breadcrumb" class="font-semibold text-white px-4"></div>
+    <div class="fixed top-0 left-0 right-0 h-16 bg-gray-600 px-4 flex items-center justify-between">
+        <div id="breadcrumb" class="font-semibold text-white"></div>
+        <div>
+            <input class="mx-2 px-2 py-1 rounded" type="text" id="directory-name">
+            <button class="px-4 py-2 text-white bg-gray-700/75 hover:bg-gray-800/50 rounded-full" id="directory-add">Add directory</button>
+        </div>
     </div>
     <div class="h-full pt-16 flex">
         <div class="grow grid grid-cols-5">
@@ -31,6 +34,8 @@
             <div id="preview" class="col-span-2 bg-gray-100 flex truncate"></div>
         </div>
     </div>
+
+    <script src="index.js"></script>
 </body>
 
 </html>
