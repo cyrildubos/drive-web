@@ -18,6 +18,12 @@
     <script src="js/entry.js"></script>
     <script src="js/path.js"></script>
     <script src="js/preview.js"></script>
+
+    <style>
+        * {
+            user-select: none;
+        }
+    </style>
 </head>
 
 <body class="truncate h-screen">
@@ -26,6 +32,9 @@
         <div>
             <input class="mx-2 px-2 py-1 rounded" type="text" id="directory-name">
             <button class="px-4 py-2 text-white bg-gray-700/75 hover:bg-gray-800/50 rounded-full" id="directory-add">Add directory</button>
+
+            <button class="ml-8 px-4 py-2 text-white bg-gray-700/75 hover:bg-gray-800/50 rounded-full" id="file-upload">Upload file</button>
+            <input type="file" id="file-upload-input" class="hidden">
         </div>
     </div>
     <div class="h-full pt-16 flex">

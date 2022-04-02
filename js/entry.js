@@ -177,18 +177,18 @@ function activateDirectoryEntries() {
 function activateFileEntries() {
     for (var fileEntry of document.getElementsByClassName('file-entry'))
         fileEntry.addEventListener('click', function (event) {
-            // event.preventDefault();
+            event.preventDefault();
 
-            var name = event.currentTarget.dataset.name;
-            var type = event.currentTarget.dataset.type;
+            if (event.target.id != 'download' && event.target.id != 'remove') {
+                var name = event.currentTarget.dataset.name;
+                var type = event.currentTarget.dataset.type;
 
-            setPreview(name, type);
+                setPreview(name, type);
+            }
         });
 }
 
 function setEntries() {
-    console.log('qeqweqe')
-
     $.ajax({
         url: 'directories_and_files.php',
         type: 'get',
