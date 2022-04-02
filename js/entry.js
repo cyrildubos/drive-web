@@ -177,7 +177,7 @@ function activateDirectoryEntries() {
 function activateFileEntries() {
     for (var fileEntry of document.getElementsByClassName('file-entry'))
         fileEntry.addEventListener('click', function (event) {
-            event.preventDefault();
+            // event.preventDefault();
 
             var name = event.currentTarget.dataset.name;
             var type = event.currentTarget.dataset.type;
