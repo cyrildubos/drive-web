@@ -14,7 +14,6 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <script src="js/drag-n-drop.js"></script>
     <script src="js/entry.js"></script>
     <script src="js/path.js"></script>
     <script src="js/preview.js"></script>
@@ -39,7 +38,7 @@
     </div>
     <div class="h-full pt-16 flex">
         <div class="grow grid grid-cols-5">
-            <div id="entries" class="col-span-3 overflow-y-scroll" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);" ondragleave="dragLeaveHandler(event);"></div>
+            <div id="entries" class="col-span-3 overflow-y-scroll"></div>
             <div id="preview" class="col-span-2 bg-gray-100 flex truncate"></div>
         </div>
     </div>
