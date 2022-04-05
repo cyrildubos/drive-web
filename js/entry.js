@@ -19,7 +19,7 @@ function createDirectoyEntry(name, size) {
     // files element
     var files = document.createElement('div');
     files.classList.add('rounded-full');
-    files.classList.add('bg-gray-500/75');
+    files.classList.add('bg-gray-500');
     files.classList.add('text-white');
     files.classList.add('m-2');
     files.classList.add('p-2');
@@ -29,8 +29,8 @@ function createDirectoyEntry(name, size) {
         // remove button
         var remove = document.createElement('button');
         remove.classList.add('rounded-full');
-        remove.classList.add('bg-red-700/75');
-        remove.classList.add('hover:bg-red-700');
+        remove.classList.add('bg-red-700');
+        remove.classList.add('hover:bg-red-800');
         remove.classList.add('text-white');
         remove.classList.add('m-2');
         remove.classList.add('p-2');
@@ -67,7 +67,7 @@ function createDirectoyEntry(name, size) {
     entry.classList.add('flex');
     entry.classList.add('items-center');
     entry.classList.add('justify-between');
-    entry.classList.add('hover:bg-gray-200/50');
+    entry.classList.add('hover:bg-gray-300');
     entry.classList.add('active:bg-gray-200');
     entry.dataset.name = name;
     entry.appendChild(left);
@@ -97,8 +97,8 @@ function createFileEntry(name, type) {
     // download button
     var download = document.createElement('a');
     download.classList.add('rounded-full');
-    download.classList.add('bg-green-700/75');
-    download.classList.add('hover:bg-green-700');
+    download.classList.add('bg-green-700');
+    download.classList.add('hover:bg-green-800');
     download.classList.add('text-white');
     download.classList.add('m-2');
     download.classList.add('p-2');
@@ -110,8 +110,8 @@ function createFileEntry(name, type) {
     // remove button
     var remove = document.createElement('button');
     remove.classList.add('rounded-full');
-    remove.classList.add('bg-red-700/75');
-    remove.classList.add('hover:bg-red-700');
+    remove.classList.add('bg-red-700');
+    remove.classList.add('hover:bg-red-800');
     remove.classList.add('text-white');
     remove.classList.add('m-2');
     remove.classList.add('p-2');
@@ -146,7 +146,7 @@ function createFileEntry(name, type) {
     entry.classList.add('file-entry');
     entry.classList.add('flex');
     entry.classList.add('justify-between');
-    entry.classList.add('hover:bg-gray-200/50');
+    entry.classList.add('hover:bg-gray-300');
     entry.classList.add('active:bg-gray-200');
     entry.dataset.name = name;
     entry.dataset.type = type;
@@ -190,7 +190,7 @@ function activateFileEntries() {
 
 function setEntries() {
     $.ajax({
-        url: 'directories_and_files.php',
+        url: 'entries.php',
         type: 'get',
         dataType: 'json',
         data: {
